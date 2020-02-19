@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KADClientModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entity" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Client" EntityType="KADClientModel.Client" />
+    <EntitySet Name="Comment" EntityType="KADClientModel.Comment" />
+    <EntitySet Name="Issue" EntityType="KADClientModel.Issue" />
+    <EntitySet Name="sysdiagrams" EntityType="KADClientModel.sysdiagrams" />
+    <AssociationSet Name="FK_Issue_Client" Association="KADClientModel.FK_Issue_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Issue" EntitySet="Issue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment_Issue" Association="KADClientModel.FK_Comment_Issue">
+      <End Role="Issue" EntitySet="Issue" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="60" FixedLength="true" Unicode="true" />
+    <Property Name="FirstSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="SecondSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="SecondContact" Type="Int32" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="PhoneService" Type="Boolean" />
+    <Property Name="TelevisionService" Type="Boolean" />
+    <Property Name="CellPhoneService" Type="Boolean" />
+    <Property Name="InternetService" Type="Boolean" />
+    <NavigationProperty Name="Issue" Relationship="KADClientModel.FK_Issue_Client" FromRole="Client" ToRole="Issue" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdIssue" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ComentTimestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Issue" Relationship="KADClientModel.FK_Comment_Issue" FromRole="Comment" ToRole="Issue" />
+  </EntityType>
+  <EntityType Name="Issue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="ReportNumber" Type="Int32" />
+    <Property Name="RegisterTimestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ContactPhone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="ContactEmail" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="SupportUserAssigned" Type="Int32" />
+    <Property Name="IdClient" Type="Int32" />
+    <NavigationProperty Name="Client" Relationship="KADClientModel.FK_Issue_Client" FromRole="Issue" ToRole="Client" />
+    <NavigationProperty Name="Comment" Relationship="KADClientModel.FK_Comment_Issue" FromRole="Issue" ToRole="Comment" />
+    <Property Name="Service" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Issue_Client">
+    <End Type="KADClientModel.Client" Role="Client" Multiplicity="0..1" />
+    <End Type="KADClientModel.Issue" Role="Issue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Issue">
+        <PropertyRef Name="IdClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment_Issue">
+    <End Type="KADClientModel.Issue" Role="Issue" Multiplicity="0..1" />
+    <End Type="KADClientModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issue">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="IdIssue" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
