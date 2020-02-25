@@ -9,7 +9,6 @@ namespace WebAPILab.Models
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public Nullable<int> ReportNumber { get; set; }
         public byte[] RegisterTimestamp { get; set; }
         public string Address { get; set; }
         public string ContactPhone { get; set; }
@@ -24,4 +23,3 @@ namespace WebAPILab.Models
     }
 
     }
-}

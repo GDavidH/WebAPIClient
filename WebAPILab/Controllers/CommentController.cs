@@ -10,21 +10,111 @@ namespace WebAPILab.Controllers
     public class CommentController : ApiController
     {
 
-        //Registrar nueva  solicitud
+        //List comment
+        public IHttpActionResult GetAll()
+        {
+            //Lista de tipo iterador
+            IList<CommentModel> comments = null;
+
+            using (var context = new Entities())
+            {
+                comments = context.Comment
+                    .Select(CommentItem => new CommentModel()
+                    {
+                        Id = CommentItem.Id,
+                        IdIssue = CommentItem.IdIssue,
+                        Description = CommentItem.Description,
+                        ComentTimestamp = CommentItem.ComentTimestamp,
+
+
+                    }).ToList<CommentModel>();
+            }
+            if (comments.Count == 0)
+            {
+
+                return NotFound();
+            }
+
+            return Ok(comments);
+        }
+
+        //newComment 
         public IHttpActionResult Post(CommentModel newComment)
         {
-            using (var context = new Entity())
+            DateTime today = DateTime.Now;
+            using (var context = new Entities())
             {
                 context.Comment
                 .Add(new Comment()
                 {
+                    IdIssue = newComment.IdIssue,
                     Description = newComment.Description,
-                    ComentTimestamp = newComment.ComentTimestamp//default
+                    ComentTimestamp = BitConverter.GetBytes(today.Ticks),//default//default
 
                 });
                 context.SaveChanges();
 
             }
+            return Ok();
+        }
+
+
+
+        public IHttpActionResult GetById(int id)
+        {
+            //Lista de tipo iterador
+            ClientModel client = null;
+
+            using (var context = new Entities())
+            {
+                client = context.Client
+                    .Where(ClientItem => ClientItem.Id == id)
+                    .Select(ClientItem => new ClientModel()
+                    {
+
+
+                    }).FirstOrDefault<ClientModel>();
+            }
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(client);
+        }
+
+        //Update Client
+        public IHttpActionResult Put(CommentModel comment)
+        {
+            using (var context = new Entities())
+            {
+                var existindComment = context.Comment
+                .Where(cmm => cmm.Id == comment.Id).FirstOrDefault<Comment>();
+
+                if (existindComment != null)
+                {
+
+
+                    context.SaveChanges();
+                }
+
+            }
+
+            return Ok();
+        }
+
+        //Delete Client
+        public IHttpActionResult Delete(int id)
+        {
+            using (var context = new Entities())
+            {
+                var comment = context.Comment
+                    .Where(commentItem => commentItem.Id == id).FirstOrDefault();
+
+                context.Entry(comment).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+
             return Ok();
         }
 
