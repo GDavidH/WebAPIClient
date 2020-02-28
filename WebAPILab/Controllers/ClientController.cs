@@ -15,7 +15,7 @@ namespace WebAPILab.Controllers
             //Lista de tipo iterador
             IList<ClientModel> clients = null;
 
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 clients = context.Client
                     .Select(ClientItem => new ClientModel()
@@ -32,6 +32,7 @@ namespace WebAPILab.Controllers
                         TelevisionService = ClientItem.TelevisionService,
                         CellPhoneService = ClientItem.CellPhoneService,
                         InternetService = ClientItem.InternetService
+
                     }).ToList<ClientModel>();
             }
             if (clients.Count == 0)
@@ -79,7 +80,7 @@ namespace WebAPILab.Controllers
             //Lista de tipo iterador
             ClientModel client = null;
 
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 client = context.Client
                     .Where(ClientItem => ClientItem.Id == id)
@@ -96,8 +97,7 @@ namespace WebAPILab.Controllers
                         PhoneService = ClientItem.PhoneService,
                         TelevisionService = ClientItem.TelevisionService,
                         CellPhoneService = ClientItem.CellPhoneService,
-                        InternetService = ClientItem.InternetService,
-                        Issue = ClientItem.Issue
+                        InternetService = ClientItem.InternetService
 
                     }).FirstOrDefault<ClientModel>();
             }
@@ -112,7 +112,7 @@ namespace WebAPILab.Controllers
         //Update Client
         public IHttpActionResult Put(ClientModel client)
         {
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 var existindClient = context.Client
                 .Where(cl => cl.Id == client.Id).FirstOrDefault<Client>();
@@ -143,7 +143,7 @@ namespace WebAPILab.Controllers
         //Delete Client
         public IHttpActionResult Delete(int id)
         {
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 var client = context.Client
                     .Where(clientItem => clientItem.Id == id).FirstOrDefault();

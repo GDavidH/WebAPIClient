@@ -22,7 +22,7 @@ namespace WebAPILab
     
         public int Id { get; set; }
         public string Description { get; set; }
-        public byte[] RegisterTimestamp { get; set; }
+        public Nullable<System.DateTime> RegisterTimestamp { get; set; }
         public string Address { get; set; }
         public string ContactPhone { get; set; }
         public string ContactEmail { get; set; }

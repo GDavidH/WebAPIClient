@@ -15,7 +15,7 @@ namespace WebAPILab.Controllers
         {
             IList<IssueModel> Issues = null;
 
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 Issues = context.Issue
                     .Select(IssueItem => new IssueModel()
@@ -45,14 +45,14 @@ namespace WebAPILab.Controllers
         public IHttpActionResult Post(IssueModel newIssue)
         {
             DateTime today = DateTime.Now;
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 context.Issue
                 .Add(new Issue()
                 {
 
-                    Description = newIssue.Description,
-                    RegisterTimestamp = newIssue.RegisterTimestamp,
+                    Description = newIssue.Description,                   
+                    RegisterTimestamp = today,
                     Address = newIssue.Address,
                     ContactPhone = newIssue.ContactPhone,
                     ContactEmail = newIssue.ContactEmail,
@@ -75,7 +75,7 @@ namespace WebAPILab.Controllers
             //Lista de tipo iterador
             IssueModel issue = null;
 
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 issue = context.Issue
                     .Where(IssueItem => IssueItem.Id == id)
@@ -105,7 +105,8 @@ namespace WebAPILab.Controllers
         //Update Client
         public IHttpActionResult Put(IssueModel issue)
         {
-            using (var context = new Entities())
+
+            using (var context = new Entity())
             {
                 var existindIssue = context.Issue
                 .Where(iss => iss.Id == issue.Id).FirstOrDefault<Issue>();
@@ -114,7 +115,6 @@ namespace WebAPILab.Controllers
                 {
 
                     existindIssue.Description = issue.Description;
-                    existindIssue.RegisterTimestamp = issue.RegisterTimestamp;
                     existindIssue.Address = issue.Address;
                     existindIssue.ContactPhone = issue.ContactPhone;
                     existindIssue.ContactEmail = issue.ContactEmail;
@@ -134,7 +134,7 @@ namespace WebAPILab.Controllers
         //Delete Client
         public IHttpActionResult Delete(int id)
         {
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 var issue = context.Client
                     .Where(issueItem => issueItem.Id == id).FirstOrDefault();

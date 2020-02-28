@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d107bf6026064440a8352bdd700ebcaa" Name="Diagram1">
+        <EntityTypeShape EntityType="KADClientModel1.Client" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="KADClientModel1.Comment" Width="1.5" PointX="5.25" PointY="1.875" />
+        <EntityTypeShape EntityType="KADClientModel1.Issue" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="KADClientModel1.sysdiagrams" Width="1.5" PointX="0.75" PointY="5.75" />
+        <AssociationConnector Association="KADClientModel1.FK_Issue_Client" />
+        <AssociationConnector Association="KADClientModel1.FK_Comment_Issue" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

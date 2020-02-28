@@ -16,7 +16,7 @@ namespace WebAPILab.Controllers
             //Lista de tipo iterador
             IList<CommentModel> comments = null;
 
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 comments = context.Comment
                     .Select(CommentItem => new CommentModel()
@@ -42,14 +42,14 @@ namespace WebAPILab.Controllers
         public IHttpActionResult Post(CommentModel newComment)
         {
             DateTime today = DateTime.Now;
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 context.Comment
                 .Add(new Comment()
                 {
                     IdIssue = newComment.IdIssue,
                     Description = newComment.Description,
-                    ComentTimestamp = BitConverter.GetBytes(today.Ticks),//default//default
+                    ComentTimestamp = today//default
 
                 });
                 context.SaveChanges();
@@ -65,7 +65,7 @@ namespace WebAPILab.Controllers
             //Lista de tipo iterador
             ClientModel client = null;
 
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 client = context.Client
                     .Where(ClientItem => ClientItem.Id == id)
@@ -86,7 +86,7 @@ namespace WebAPILab.Controllers
         //Update Client
         public IHttpActionResult Put(CommentModel comment)
         {
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 var existindComment = context.Comment
                 .Where(cmm => cmm.Id == comment.Id).FirstOrDefault<Comment>();
@@ -106,7 +106,7 @@ namespace WebAPILab.Controllers
         //Delete Client
         public IHttpActionResult Delete(int id)
         {
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 var comment = context.Comment
                     .Where(commentItem => commentItem.Id == id).FirstOrDefault();
