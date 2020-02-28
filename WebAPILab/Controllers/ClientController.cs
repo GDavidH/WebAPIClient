@@ -47,7 +47,7 @@ namespace WebAPILab.Controllers
         //Registar nuevo cliente
         public IHttpActionResult Post(ClientModel newClient)
         {
-            using (var context = new Entities())
+            using (var context = new Entity())
             {
                 context.Client
                 .Add(new Client()

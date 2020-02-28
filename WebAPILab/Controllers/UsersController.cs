@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using WebAPILab.Helpers;
 using WebAPILab.Models;
 using System.Web.Http;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebAPILab.Controllers
 {
@@ -33,5 +35,6 @@ namespace WebAPILab.Controllers
             var users = await _userService.GetAll();
             return Ok(users);
         }
+
     }
 }

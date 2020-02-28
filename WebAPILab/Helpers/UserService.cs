@@ -14,10 +14,13 @@ namespace WebAPILab.Helpers
 
     public class UserService : IUserService
     {
+
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<UserModel> _users = new List<UserModel>
         {
             new UserModel { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+
+
         };
 
         public async Task<UserModel> Authenticate(string username, string password)
@@ -36,10 +39,14 @@ namespace WebAPILab.Helpers
         public async Task<IEnumerable<UserModel>> GetAll()
         {
             // return users without passwords
-            return await Task.Run(() => _users.Select(x => {
+            return await Task.Run(() => _users.Select(x =>
+            {
                 x.Password = null;
                 return x;
             }));
         }
+
+
     }
+
 }
