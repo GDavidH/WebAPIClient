@@ -52,7 +52,6 @@ namespace WebAPILab.Controllers
                 context.Client
                 .Add(new Client()
                 {
-                    Id = newClient.Id,
                     Name = newClient.Name,
                     FirstSurname = newClient.FirstSurname,
                     SecondSurname = newClient.SecondSurname,

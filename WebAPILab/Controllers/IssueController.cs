@@ -102,7 +102,7 @@ namespace WebAPILab.Controllers
             return Ok(issue);
         }
 
-        //Update Client
+        //Update Issue
         public IHttpActionResult Put(IssueModel issue)
         {
 
@@ -113,7 +113,6 @@ namespace WebAPILab.Controllers
 
                 if (existindIssue != null)
                 {
-
                     existindIssue.Description = issue.Description;
                     existindIssue.Address = issue.Address;
                     existindIssue.ContactPhone = issue.ContactPhone;
@@ -131,12 +130,12 @@ namespace WebAPILab.Controllers
             return Ok();
         }
 
-        //Delete Client
+        //Delete Issue
         public IHttpActionResult Delete(int id)
         {
             using (var context = new Entity())
             {
-                var issue = context.Client
+                var issue = context.Issue
                     .Where(issueItem => issueItem.Id == id).FirstOrDefault();
 
                 context.Entry(issue).State = System.Data.Entity.EntityState.Deleted;

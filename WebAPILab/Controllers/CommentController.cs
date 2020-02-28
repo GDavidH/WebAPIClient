@@ -63,17 +63,23 @@ namespace WebAPILab.Controllers
         public IHttpActionResult GetById(int id)
         {
             //Lista de tipo iterador
-            ClientModel client = null;
+            CommentModel client = null;
 
             using (var context = new Entity())
             {
-                client = context.Client
-                    .Where(ClientItem => ClientItem.Id == id)
-                    .Select(ClientItem => new ClientModel()
+                client = context.Comment
+                    .Where(CommentItem => CommentItem.Id == id)
+                    .Select(CommentItem => new CommentModel()
                     {
 
+                        Id = CommentItem.Id,
+                        IdIssue = CommentItem.IdIssue,
+                        Description = CommentItem.Description,
+                        ComentTimestamp = CommentItem.ComentTimestamp,
 
-                    }).FirstOrDefault<ClientModel>();
+
+
+                    }).FirstOrDefault<CommentModel>();
             }
             if (client == null)
             {
@@ -93,6 +99,9 @@ namespace WebAPILab.Controllers
 
                 if (existindComment != null)
                 {
+
+                    existindComment.IdIssue = comment.IdIssue;
+                    existindComment.Description = comment.Description;
 
 
                     context.SaveChanges();
